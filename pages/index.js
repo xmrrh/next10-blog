@@ -13,7 +13,10 @@ export default function Home ({ posts }) {
       </Head>
 
       <main>
-        {posts.map(post => (
+      {console.log("posts = " , posts )}
+        {
+          
+          posts&&posts.map(post => (
           <div key={post.id}>
             <a href={`/post/${post.id}`}>
               <h2>{post.title}</h2>
@@ -27,11 +30,11 @@ export default function Home ({ posts }) {
 
 export async function getServerSideProps (context) {
   const SSR = withSSRContext(context.req)
-  const models = await SSR.DataStore.query(Post)
-
+  const posts = await SSR.DataStore.query(Post)
+  console.log("models = " , posts )
   return {
     props: {
-      models: JSON.parse(JSON.stringify(models))
+      posts: JSON.parse(JSON.stringify(posts))
     }
   }
 }
